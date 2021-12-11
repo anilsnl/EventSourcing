@@ -1,4 +1,5 @@
 using AdsCargo.Abstraction.Responses.Customer;
+using AdsCargo.Domain.Context;
 using AdsCargo.Domain.Entities.RetailCustomer;
 using MediatR;
 using MongoDB.Driver;
@@ -7,12 +8,12 @@ namespace AdsCargo.Applications.Customer.Commands.CreateRetailCustomer;
 
 public class CreateRetailCustomerCommandHandler : IRequestHandler<CreateRetailCustomerCommand, RetailCustomerDto>
 {
-    private readonly IMongoClient _mongoClient;
+    private readonly CargoMongoContext _cargoMongoContext;
 
     public CreateRetailCustomerCommandHandler(
-        IMongoClient mongoClient)
+        CargoMongoContext cargoMongoContext)
     {
-        _mongoClient = mongoClient;
+        _cargoMongoContext = cargoMongoContext;
     }
 
     public async Task<RetailCustomerDto> Handle(
@@ -23,10 +24,8 @@ public class CreateRetailCustomerCommandHandler : IRequestHandler<CreateRetailCu
             request.FirstName,
             request.LastName,
             request.PhoneNumber);
-        
-        var database  = _mongoClient.GetDatabase("AdsCargo");
-        var collection =  database.GetCollection<RetailCustomer>("retailCustomers");
-        await collection.InsertOneAsync(customer, cancellationToken: cancellationToken);
+       
+        await _cargoMongoContext.RetailsCustomers.InsertOneAsync(customer, cancellationToken: cancellationToken);
         return new RetailCustomerDto()
         {
             Id = customer.Id,

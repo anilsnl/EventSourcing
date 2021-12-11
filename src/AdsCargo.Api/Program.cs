@@ -1,4 +1,5 @@
 using System.Reflection;
+using AdsCargo.Domain.Context;
 using MediatR;
 using MongoDB.Driver;
 
@@ -11,13 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.AddScoped<IMongoClient>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    var client = new MongoClient(configuration.GetConnectionString("Mongo"));
-
-    return client;
-});
+builder.Services.AddMongo();
 
 
 var app = builder.Build();
