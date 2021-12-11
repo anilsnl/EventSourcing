@@ -1,5 +1,5 @@
 
-using AdsCargo.Domain.Enums;
+using AdsCargo.Abstraction.Enums;
 
 namespace AdsCargo.Domain.Entities.RetailCustomer;
 

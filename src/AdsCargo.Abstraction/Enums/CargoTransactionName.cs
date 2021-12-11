@@ -1,4 +1,4 @@
-namespace AdsCargo.Domain.Enums;
+namespace AdsCargo.Abstraction.Enums;
 
 public enum CargoTransactionName
 {
