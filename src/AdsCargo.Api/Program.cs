@@ -1,7 +1,6 @@
 using System.Reflection;
 using AdsCargo.Domain.Context;
 using MediatR;
-using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
